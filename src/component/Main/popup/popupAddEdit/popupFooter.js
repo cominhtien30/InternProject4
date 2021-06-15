@@ -11,7 +11,7 @@ function popupFooter(props) {
                         size="small"
                         style={{ marginLeft: "17.83px", height: "40px", width: "89px" }}
                         startIcon="save"
-                        
+                        onClick={props.submit}
                     />
         </ModalFooter>
     );

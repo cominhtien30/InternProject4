@@ -1,11 +1,12 @@
 // @flow
 import React, { useState, useEffect } from 'react';
-import { Label, TextInput, DatePicker, NumberInput, Toggle, Dropdown, Modal, ModalHeader, ModalBody } from 'diginet-core-ui/components';
+import { Label, TextInput, DatePicker, NumberInput, Toggle, Dropdown, Modal, ModalBody } from 'diginet-core-ui/components';
 import { ArrowUp } from 'diginet-core-ui/icons';
-import { onVali, validateObject } from "../../../validation"
+import { onVali, validateObject } from "../validation"
 import { stylesPopup } from "../../styles"
 import formObject from "../formObject"
 import ModalFooter from "./popupFooter"
+import ModalHeader from "./popupHeader"
 import moment from "moment";
 
 
@@ -105,10 +106,7 @@ function FormPopup(props)
             open={popupForm}
             onClose={closePopupAdd}
         >
-            <form className={classes.form} onSubmit={submit} >
-                <ModalHeader>
-                    Thông tin bảng mục tiêu
-                </ModalHeader>
+               <ModalHeader/>
                 <ModalBody>
                     <div className={classes.row} style={{ marginTop: "25.89px", flexDirection: "column " }} >
                         <div className={classes.colInput}>
@@ -373,8 +371,7 @@ function FormPopup(props)
                         </div>
                     </div>
                 </ModalBody>
-                <ModalFooter />
-            </form>
+                <ModalFooter submit={submit} />
         </Modal>
 
     </>

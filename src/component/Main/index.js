@@ -1,15 +1,15 @@
 // @flow
-import * as actions from "../actions";
+import * as actions from "../../actions";
 import { connect } from "react-redux";
 import React, { useEffect, useState } from 'react';
 import Form from "./popup/popupAddEdit/popup";
-import DialogDelete from "./popup/popupDelete";
+import DialogDelete from "./popup/popupDelete/popupDelete";
 import { Divider, PagingInfo } from 'diginet-core-ui/components';
 import 'devextreme/dist/css/dx.light.css';
 import { Edit, Delete } from 'diginet-core-ui/icons';
 import { stylesIndex } from "./styles"
 import Header from "./header";
-import Loading from "./loading"
+import Loading from "./loading/loading"
 import Alert from "./alter/success"
 import
 {

@@ -1,4 +1,4 @@
-import randomId from "../../../generateID"
+import randomId from "../../../../generateID"
  const form=({
     GoalPlanID: randomId(),
     GoalPlanName: "",
@@ -17,7 +17,5 @@ import randomId from "../../../generateID"
     LabelLevel3: "",
     IsApproved: 0,
     ApprovalBeginDate: ""
-
-    
 });
 export default form;
