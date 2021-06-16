@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/deginetInterCRUD/static/css/main.4c70d653.chunk.css",
+    "main.js": "/deginetInterCRUD/static/js/main.74c0c2da.chunk.js",
+    "main.js.map": "/deginetInterCRUD/static/js/main.74c0c2da.chunk.js.map",
+    "runtime-main.js": "/deginetInterCRUD/static/js/runtime-main.d547fb07.js",
+    "runtime-main.js.map": "/deginetInterCRUD/static/js/runtime-main.d547fb07.js.map",
+    "static/css/2.e8a65634.chunk.css": "/deginetInterCRUD/static/css/2.e8a65634.chunk.css",
+    "static/js/2.9d12e078.chunk.js": "/deginetInterCRUD/static/js/2.9d12e078.chunk.js",
+    "static/js/2.9d12e078.chunk.js.map": "/deginetInterCRUD/static/js/2.9d12e078.chunk.js.map",
+    "static/js/3.59a15899.chunk.js": "/deginetInterCRUD/static/js/3.59a15899.chunk.js",
+    "static/js/3.59a15899.chunk.js.map": "/deginetInterCRUD/static/js/3.59a15899.chunk.js.map",
+    "index.html": "/deginetInterCRUD/index.html",
+    "static/css/2.e8a65634.chunk.css.map": "/deginetInterCRUD/static/css/2.e8a65634.chunk.css.map",
+    "static/css/main.4c70d653.chunk.css.map": "/deginetInterCRUD/static/css/main.4c70d653.chunk.css.map",
+    "static/js/2.9d12e078.chunk.js.LICENSE.txt": "/deginetInterCRUD/static/js/2.9d12e078.chunk.js.LICENSE.txt",
+    "static/media/dx.light.css": "/deginetInterCRUD/static/media/dxicons.d8b3a23c.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d547fb07.js",
+    "static/css/2.e8a65634.chunk.css",
+    "static/js/2.9d12e078.chunk.js",
+    "static/css/main.4c70d653.chunk.css",
+    "static/js/main.74c0c2da.chunk.js"
+  ]
+}
