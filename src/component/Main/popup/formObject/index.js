@@ -1,6 +1,5 @@
-import randomId from "../../../../generateID"
- const form=({
-    GoalPlanID: randomId(),
+ const form=(idRandom)=>({
+    GoalPlanID: idRandom,
     GoalPlanName: "",
     DateFrom: "",
     DateTo: "",
