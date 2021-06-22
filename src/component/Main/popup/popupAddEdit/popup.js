@@ -1,6 +1,7 @@
 // @flow
-import React, { useState, useEffect } from "react";
-import {
+import React, { useState, useEffect, useRef } from "react";
+import
+{
   Label,
   TextInput,
   DatePicker,
@@ -18,8 +19,10 @@ import ModalFooter from "./popupFooter";
 import ModalHeader from "./popupHeader";
 import moment from "moment";
 import randomId from "../../../../randomId";
+import { Accordion, AccordionSummary, AccordionDetails } from 'diginet-core-ui/components';
 
-function FormPopup(props) {
+function FormPopup(props)
+{
   //props
   const {
     listPlans,
@@ -29,26 +32,31 @@ function FormPopup(props) {
     updatePlan,
     detail
   } = props;
-  //randomId
 
   //detail vatible
   const classes = stylesPopup();
   //form
   const [form, setForm] = useState(formObject(randomId()));
   //when set State
-  useEffect(() => {
+  useEffect(() =>
+  {
     const checkDetail = Object.keys(detail).length;
     checkDetail > 0 ? setForm(detail) : setForm(formObject(randomId()));
   }, [detail]);
+  //onKeyUP dropdow
+  const preVal = useRef("")
+  preVal.current = parseInt(form.NumEvaluationLevel);
   //validation
   console.log(form);
   const [validate, setvalidate] = useState(validateObject);
   const valiDefault = validate;
   //submit form
-  const submit = (e) => {
+  const submit = (e) =>
+  {
     e.preventDefault();
     let vali = {};
-    Object.keys(validate).forEach((k) => {
+    Object.keys(validate).forEach((k) =>
+    {
       vali = { ...validate, ...vali, [k]: onVali(form[k]) };
     });
     setvalidate(vali);
@@ -59,7 +67,8 @@ function FormPopup(props) {
       .filter((element, index) => index < valiWhenSubmit.length - 1)
       .some((item) => item !== true);
     // check edit or add
-    if (checkVali === false) {
+    if (checkVali === false)
+    {
       const findIndexPlan = listPlans.findIndex(
         (item) => item.GoalPlanID === form.GoalPlanID
       );
@@ -67,25 +76,31 @@ function FormPopup(props) {
     }
   };
   //add handle
-  const addPlanItem = () => {
+  const addPlanItem = () =>
+  {
     //when checkVali not exist !== true
     closePopupAdd();
     addPlan(form);
   };
   //edit handle
-  const editPlanItem = (index) => {
+  const editPlanItem = (index) =>
+  {
     //when checkVali not exist !== true
     closePopupAdd();
     updatePlan(index, form);
   };
-  const closePopupAdd = () => {
+  const closePopupAdd = () =>
+  {
     closePopup();
     setvalidate(valiDefault);
   };
+  console.log(form)
   // //when onChange Input
-  const onChangeHandle = (value, name) => {
+  const onChangeHandle = (value, name) =>
+  {
     setForm({ ...form, [name]: value });
-    switch (name) {
+    switch (name)
+    {
       case "GoalPlanName":
       case "DateFrom":
       case "DateTo":
@@ -116,8 +131,9 @@ function FormPopup(props) {
             style={{ marginTop: "25.89px", flexDirection: "column " }}
           >
             <div className={classes.colInput}>
-              <Label required>Tên Mục Tiên</Label>
               <TextInput
+                label="Tên Mục Tiên"
+                required
                 value={
                   form.GoalPlanName.replace(/ /g, "") === ""
                     ? ""
@@ -134,8 +150,8 @@ function FormPopup(props) {
               />
             </div>
             <div className={classes.colInput}>
-              <Label>Mô tả</Label>
               <TextInput
+                label="Mô tả"
                 value={form.Description}
                 placeholder="Nhập"
                 onChange={(e) => onChangeHandle(e.target.value, "Description")}
@@ -147,19 +163,22 @@ function FormPopup(props) {
             <div className={classes.rowInput}>
               <div className={classes.colInput}>
                 <DatePicker
+                  required
                   value={form.DateFrom}
                   error={validate.DateFrom === true ? "" : validate.DateFrom}
                   style={{ marginBottom: "0px" }}
                   clearAble
+                  max={moment(form.DateTo).format("YYYY-MM-DD")}
                   displayFormat="DD/MM/YYYY"
                   label="Ngày bắt đầu"
-                  placeholder="dd/MM/yyyy"
+                  placeholder="DD/MM/YYYY"
                   returnFormat="MM/DD/YYYY"
                   onChange={(e) => onChangeHandle(e.value, "DateFrom")}
                 />
               </div>
               <div className={classes.colInput} style={{ marginLeft: "28px" }}>
                 <DatePicker
+                  required
                   disabled={form.DateFrom === "" ? true : false}
                   value={form.DateTo}
                   error={validate.DateTo === true ? "" : validate.DateTo}
@@ -170,14 +189,16 @@ function FormPopup(props) {
                   //min="2021-06-18"
                   displayFormat="DD/MM/YYYY"
                   label="Ngày kết thúc"
-                  placeholder="dd/MM/yyyy"
+                  placeholder="DD/MM/YYYY"
                   returnFormat="MM/DD/YYYY"
                   onChange={(e) => onChangeHandle(e.value, "DateTo")}
                 />
               </div>
               <div className={classes.colInput} style={{ marginLeft: "28px" }}>
-                <Label>Độ Ưu Tiên</Label>
+
                 <NumberInput
+                  label="Độ Ưu Tiên"
+                  min={0}
                   value={form.Priority}
                   defaultValue={1}
                   style={{ margin: "auto" }}
@@ -189,6 +210,7 @@ function FormPopup(props) {
             <div className={classes.rowInput} style={{ width: "50%" }}>
               <Label>Cho phép nhân viên sửa trọng số</Label>
               <Toggle
+
                 checked={form.IsPermissionEditProportion === 1 ? true : false}
                 onChange={(e) =>
                   onChangeHandle(
@@ -207,165 +229,187 @@ function FormPopup(props) {
                 }
               />
             </div>
-            <div className={classes.rowInput} style={{ width: "auto" }}>
-              <ArrowUp />
-              <Label className="label">Thông tin review</Label>
-            </div>
-            <div className={classes.rowInput} style={{ width: "70%" }}>
-              <div className={classes.rowInput} style={{ marginTop: "0px" }}>
-                <Label>Review mục tiêu</Label>
-                <div style={{ marginRight: "28.48px" }}>
-                  <Toggle
-                    checked={form.IsReview === 1 ? true : false}
-                    onChange={(e) =>
-                      onChangeHandle(e.target.checked ? 1 : 0, "IsReview")
-                    }
-                  />
+            <Accordion expand>
+              <AccordionSummary className={classes.rowInput}>
+                Thông tin review
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.rowInput} style={{ width: "70%" }}>
+                  <div className={classes.rowInput} style={{ marginTop: "0px" }}>
+                    <Label>Review mục tiêu</Label>
+                    <div style={{ marginRight: "28.48px" }}>
+                      <Toggle
+                        checked={form.IsReview === 1 ? true : false}
+                        onChange={(e) =>
+                          onChangeHandle(e.target.checked ? 1 : 0, "IsReview")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={classes.colInput} style={{ marginTop: "0px" }}>
+                    <DatePicker
+                      // returnFormat='DD/MM/YYYY'
+                      value={form.EvaluationExpireDate}
+                      style={{ marginBottom: "0px" }}
+                      clearAble
+                      disabled={form.IsReview === 1 ? false : true}
+                      label="Hạn review cuối"
+                      placeholder="DD/MM/YYYY"
+                      returnFormat="MM/DD/YYYY"
+                      displayFormat="DD/MM/YYYY"
+                      onChange={(e) =>
+                        onChangeHandle(e.value, "EvaluationExpireDate")
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className={classes.colInput} style={{ marginTop: "0px" }}>
-                <DatePicker
-                  // returnFormat='DD/MM/YYYY'
-                  value={form.EvaluationExpireDate}
-                  style={{ marginBottom: "0px" }}
-                  clearAble
-                  disabled={form.IsReview === 1 ? false : true}
-                  label="Hạn review cuối"
-                  placeholder="dd/MM/yyyy"
-                  returnFormat="MM/DD/YYYY"
-                  displayFormat="DD/MM/YYYY"
-                  onChange={(e) =>
-                    onChangeHandle(e.value, "EvaluationExpireDate")
-                  }
-                />
-              </div>
-            </div>
-            <div className={classes.rowInput} style={{ width: "85%" }}>
-              <div className={classes.colInput}>
-                <Dropdown
-                  disabled={form.IsReview === 1 ? false : true}
-                  dataSource={[
-                    {
-                      id: "1",
-                      name: "Item"
-                    },
-                    {
-                      id: "2",
-                      name: "Item"
-                    },
-                    {
-                      id: "3",
-                      name: "Item"
-                    }
-                  ]}
-                  //renderItem={(data, index) => index + ' - ' + data.name}
+                <div className={classes.rowInput} style={{ width: "85%" }}>
+                  <div className={classes.colInput}>
+                    <Dropdown
+                      disabled={form.IsReview === 1 ? false : true}
+                      dataSource={[
+                        {
+                          id: "1",
+                          name: "Item"
+                        },
+                        {
+                          id: "2",
+                          name: "Item"
+                        },
+                        {
+                          id: "3",
+                          name: "Item"
+                        }
+                      ]}
+                      //renderItem={(data, index) => index + ' - ' + data.name}
 
-                  style={{ width: "159px" }}
-                  displayExpr="{id} - {name}"
-                  label="Số cấp review"
-                  placeholder="Text Dang Nhap"
-                  viewType="outlined"
-                  itemMultipleSize="small"
-                  valueObjectDefault={{
-                    id: "1",
-                    name: "Item"
-                  }}
-                  value={form.NumEvaluationLevel.toString()}
-                  onChange={(e) =>
-                    onChangeHandle(e.value, "NumEvaluationLevel")
-                  }
-                />
-              </div>
-              <div className={classes.rowInput}>
-                <Label>Cho phép sap chép kết quả cấp trước</Label>
-                <div>
-                  <Toggle
-                    checked={form.IsCopyResult === 1 ? true : false}
-                    disabled={form.IsReview === 1 ? false : true}
-                    onChange={(e) =>
-                      onChangeHandle(e.target.checked ? 1 : 0, "IsCopyResult")
+                      style={{ width: "159px" }}
+                      displayExpr="{id}"
+                      label="Số cấp review"
+                      placeholder="Text Dang Nhap"
+                      viewType="outlined"
+                      itemMultipleSize="small"
+                      closeAfterSelect={true}
+                      itemMode="treeview"
+                      keyExpr="id"
+                      value={form.NumEvaluationLevel.toString()}
+                      // onKeyDown={(e) => e.target.value = e.target.value + 1}
+                      onInput={(e) =>
+                      {
+
+                        if (e.target.value.length === 0 || e.target.value.length > 1)
+                        {
+                          e.target.value = preVal.current;
+                        }
+
+                      }}
+                      onChange={(e) =>
+                        onChangeHandle(e.value, "NumEvaluationLevel")
+                      }
+                    />
+                  </div>
+                  <div className={classes.rowInput}>
+                    <Label>Cho phép sap chép kết quả cấp trước</Label>
+                    <div>
+                      <Toggle
+                        checked={form.IsCopyResult === 1 ? true : false}
+                        disabled={form.IsReview === 1 ? false : true}
+                        onChange={(e) =>
+                          onChangeHandle(e.target.checked ? 1 : 0, "IsCopyResult")
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className={classes.colInput}>
+                  <Label>Label cấp 1</Label>
+                  <TextInput
+                    value={form.LabelLevel1}
+                    disabled={
+                      form.IsReview === 1 &&
+                        parseInt(form.NumEvaluationLevel) === 1
+                        || parseInt(form.NumEvaluationLevel) === 2
+                        || parseInt(form.NumEvaluationLevel) === 3
+                        ? false
+                        : true
                     }
+                    placeholder="Nhập"
+                    inputProps={{
+                      maxLength: 250
+                    }}
+                    onChange={(e) => onChangeHandle(e.target.value, "LabelLevel1")}
                   />
                 </div>
-              </div>
-            </div>
-            <div className={classes.colInput}>
-              <Label>Label cấp 1</Label>
-              <TextInput
-                value={form.LabelLevel1}
-                disabled={
-                  form.IsReview === 0 || parseInt(form.NumEvaluationLevel) !== 1
-                    ? true
-                    : false
-                }
-                placeholder="Nhập"
-                inputProps={{
-                  maxLength: 250
-                }}
-                onChange={(e) => onChangeHandle(e.target.value, "LabelLevel1")}
-              />
-            </div>
-            <div className={classes.colInput}>
-              <Label>Label cấp 2</Label>
-              <TextInput
-                value={form.LabelLevel2}
-                disabled={
-                  form.IsReview === 0 || parseInt(form.NumEvaluationLevel) !== 2
-                    ? true
-                    : false
-                }
-                onChange={(e) => onChangeHandle(e.target.value, "LabelLevel2")}
-                placeholder="Nhập"
-                inputProps={{
-                  maxLength: 250
-                }}
-              />
-            </div>
-            <div className={classes.colInput}>
-              <Label>Label cấp 3</Label>
-              <TextInput
-                value={form.LabelLevel3}
-                disabled={
-                  form.IsReview === 0 || parseInt(form.NumEvaluationLevel) !== 3
-                    ? true
-                    : false
-                }
-                onChange={(e) => onChangeHandle(e.target.value, "LabelLevel3")}
-                placeholder="Nhập"
-                inputProps={{
-                  maxLength: 250
-                }}
-              />
-            </div>
-            <div className={classes.rowInput} style={{ width: "auto" }}>
-              <ArrowUp />
-              <Label className="label">Thông tin xét duyệt</Label>
-            </div>
-            <div className={classes.rowInput}>
-              <div className={classes.rowInput} style={{ marginTop: "0px" }}>
-                <Label>Xem xét duyệt bảng mục tiêu</Label>
-                <div style={{ marginRight: "28.48px" }}>
-                  <Toggle
-                    checked={form.IsApproved === 1 ? true : false}
-                    onChange={(e) =>
-                      onChangeHandle(e.target.checked ? 1 : 0, "IsApproved")
+                <div className={classes.colInput}>
+                  <Label>Label cấp 2</Label>
+                  <TextInput
+                    value={form.LabelLevel2}
+                    disabled={
+                      form.IsReview === 1
+                        && parseInt(form.NumEvaluationLevel) === 2
+                        || parseInt(form.NumEvaluationLevel) === 3
+                        ? false
+                        : true
                     }
+                    onChange={(e) => onChangeHandle(e.target.value, "LabelLevel2")}
+                    placeholder="Nhập"
+                    inputProps={{
+                      maxLength: 250
+                    }}
                   />
                 </div>
-              </div>
-              <div className={classes.colInput} style={{ marginTop: "0px" }}>
-                <DatePicker
-                  value={form.ApprovalBeginDate}
-                  returnFormat="MM/DD/YYYY"
-                  style={{ marginBottom: "0px" }}
-                  clearAble
-                  label="Ngày bắt đầu xét duyệt"
-                  placeholder="DDDD, dd/MMMM/yyyy"
-                  displayFormat="DD/MM/YYYY"
-                  onChange={(e) => onChangeHandle(e.value, "ApprovalBeginDate")}
-                />
-              </div>
-            </div>
+                <div className={classes.colInput}>
+                  <Label>Label cấp 3</Label>
+                  <TextInput
+                    value={form.LabelLevel3}
+                    disabled={
+                      form.IsReview === 1
+                        && parseInt(form.NumEvaluationLevel) === 3
+                        ? false
+                        : true
+                    }
+                    onChange={(e) => onChangeHandle(e.target.value, "LabelLevel3")}
+                    placeholder="Nhập"
+                    inputProps={{
+                      maxLength: 250
+                    }}
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion expand>
+              <AccordionSummary className={classes.rowInput}>
+                Thông tin xét duyệt
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.rowInput}>
+                  <div className={classes.rowInput} style={{ marginTop: "0px" }}>
+                    <Label>Xem xét duyệt bảng mục tiêu</Label>
+                    <div style={{ marginRight: "28.48px" }}>
+                      <Toggle
+                        checked={form.IsApproved === 1 ? true : false}
+                        onChange={(e) =>
+                          onChangeHandle(e.target.checked ? 1 : 0, "IsApproved")
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={classes.colInput} style={{ marginTop: "0px" }}>
+                    <DatePicker
+                      value={form.ApprovalBeginDate}
+                      returnFormat="MM/DD/YYYY"
+                      style={{ marginBottom: "0px" }}
+                      clearAble
+                      label="Ngày bắt đầu xét duyệt"
+                      placeholder="DD/MM/YYYY"
+                      displayFormat="DD/MM/YYYY"
+                      onChange={(e) => onChangeHandle(e.value, "ApprovalBeginDate")}
+                    />
+                  </div>
+
+                </div>
+              </AccordionDetails>
+            </Accordion>
           </div>
         </ModalBody>
         <ModalFooter submit={submit} />

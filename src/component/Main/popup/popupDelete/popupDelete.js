@@ -1,20 +1,31 @@
 // @flow
 import * as React from 'react';
-import { DangerPopup } from 'diginet-core-ui/components';
+import { PopupV2 } from 'diginet-core-ui/components';
 
 export default function DialogDelete(props)
 {
-  const { popupDelete, deleteTarget,closePopup } = props;
-  const {id} = popupDelete;
+  const { popupDelete, deleteTarget, closePopup } = props;
+  const { id } = popupDelete;
 
   const comfirmDelete = () =>
   {
-   
+
     deleteTarget(id);
     closePopup();
   }
 
-  return <> <DangerPopup
+  return <><PopupV2
+    open={popupDelete.open}
+    timing={3}
+    fullScreen
+    subtitle={`Bạn Có Chắc Xóa Target ${id} Này`}
+    onClose={closePopup}
+    onCancel={closePopup}
+    onConfirm={comfirmDelete}
+    type="danger"
+    pressESCToClose
+  />
+    {/* <DangerPopup
     open={popupDelete.open}
     timing={3}
     fullScreen
@@ -23,5 +34,6 @@ export default function DialogDelete(props)
     onCancel={comfirmDelete}
     onConfirm={comfirmDelete}
     pressESCToClose
-  /></>
+  /> */}
+  </>
 }
