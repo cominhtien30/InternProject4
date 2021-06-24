@@ -1,6 +1,40 @@
 import { createUseStyles } from 'react-jss'
 
 export const stylesPopup = createUseStyles({
+    root: {
+        '@media screen and (max-width: 46.25em)': {
+            "& .mobile-row-1": {
+                flexDirection: "column",
+                "& .mobile-row-item-1 ": {
+                    marginLeft: "0 !important",
+                    display: "block",
+                    width: "100% !important"
+                }
+            },
+            "& .mobile-row-2": {
+                width: "100% !important"
+            },
+            "& .mobile-row-3": {
+                width: "100% !important",
+                flexDirection: "column",
+                "& .date": {
+                    display: "block"
+                },
+                "& .mobile-row-item-3": {
+                    marginBottom: "20px  !important",
+                    marginRight: "0!important",
+                    "& div": {
+                        marginRight: "0!important",
+                    },
+
+                },
+                "& .mobile-row-item-4": {
+                    margin: "0!important",
+
+                }
+            }
+        },
+    },
     row: {
         alignItems: 'flex-start',
         display: 'flex',
@@ -9,9 +43,11 @@ export const stylesPopup = createUseStyles({
         "& .label": {
             color: "#0095FF",
             fontSize: "12px"
-        }
+        },
+
 
     },
+
     colInput: {
         marginTop: "16.89px",
         display: 'flex',

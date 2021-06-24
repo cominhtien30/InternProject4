@@ -11,6 +11,7 @@ import { stylesIndex } from "./styles"
 import Header from "./header";
 import Loading from "./loading/loading"
 import Alert from "./alter/success"
+
 import
 {
     DataGrid, Button as ButtonIcon, Column,
@@ -19,9 +20,9 @@ import
 
 function Index(props)
 {
-    const { getDatasRequest, loading, listTarget ,alertActive} = props;
+    const { getDatasRequest, loading, listTarget, alertActive } = props;
     console.log(alertActive)
-   
+
     //request data
     useEffect(() =>
     {
@@ -35,7 +36,8 @@ function Index(props)
     const [pageCurrent, setPageCurrent] = useState(0);
     //detail
     const [detail, setDetail] = useState({});
-    const openPopup=()=>{
+    const openPopup = () =>
+    {
         setPopupForm(true)
     }
     const closePopup = () =>
@@ -44,7 +46,7 @@ function Index(props)
         setPopupForm(false);
         setPopupDelete({ open: false, id: "" });
     }
- 
+
     //get detail
     const getDetail = (GoalPlanID) =>
     {
@@ -58,7 +60,8 @@ function Index(props)
         setDetail(detail[0])
     }
     //handle delete
-    const handleDelete=(GoalPlanID)=>{
+    const handleDelete = (GoalPlanID) =>
+    {
         setNotify(`Đã Xóa ID : ${GoalPlanID}`);
         setPopupDelete({ open: true, id: GoalPlanID });
     }
@@ -67,7 +70,7 @@ function Index(props)
         const { GoalPlanID } = e.row.data;;
         return index === 1
             ? <div style={{ display: "inline" }} onClick={() => getDetail(GoalPlanID)}><Edit /></div>
-            : <div style={{ display: "inline" }} onClick={()=>handleDelete(GoalPlanID)}><Delete /></div>;
+            : <div style={{ display: "inline" }} onClick={() => handleDelete(GoalPlanID)}><Delete /></div>;
     };
     const rowIndex = (e) =>
     {
@@ -79,8 +82,9 @@ function Index(props)
         return data.DateFrom === null ? "" : data.DateFrom + " - " + data.DateTo
     }
     ///notify alert
-    const [notify,setNotify]=useState("");
-    const setTextNotify=(text)=>{
+    const [notify, setNotify] = useState("");
+    const setTextNotify = (text) =>
+    {
         setNotify(text);
     }
     const stylesHeader = (caption) => (<span style={{ fontSize: 13, color: "black", fontWeight: "bold", marginBottom: "40px" }}>{caption}</span>)
@@ -154,9 +158,9 @@ function Index(props)
             /// gui detail qua
             detail={detail}
         />
-        <DialogDelete  closePopup={closePopup} popupDelete={popupDelete} deleteTarget={props.deleteTarget} />
-        {alertActive ? <Alert notify={notify}/> : "" } 
-        
+        <DialogDelete closePopup={closePopup} popupDelete={popupDelete} deleteTarget={props.deleteTarget} />
+        {alertActive ? <Alert notify={notify} /> : ""}
+
     </div>
 
 }
@@ -179,7 +183,7 @@ const mapDispatchToProps = {
     //addPlan
     addPlan: (newPlan) => actions.addPlan(newPlan),
     //update 
-    updatePlan: (index,newPlan) => actions.updatePlan(index,newPlan),
+    updatePlan: (index, newPlan) => actions.updatePlan(index, newPlan),
 
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
